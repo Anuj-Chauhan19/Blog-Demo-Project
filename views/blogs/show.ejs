@@ -1,0 +1,100 @@
+<% layout("layouts/boilerplate") -%>
+<div class="row mt-3">
+  
+  <div class="card col-6 offset-3 show-card ">
+    <h3><%= blog.title %></h3>
+    <br>
+    <img
+      src="<%= blog.image.url %>"
+      class="card-img-top show-img"
+      alt="Blog_image"
+    />
+    <p class="card-body">
+      <p class="card-text">
+        Owned By <i><strong><%= blog.owner.username %></strong> </i></p>
+
+        <p class="card-text"><%- blog.description %> </p>
+        <p class="card-text"><strong><%= blog.createdAt.toDateString() %></strong></p>
+
+      
+    </div>
+  </div>
+
+ 
+  <% if(currUser && blog.owner._id.equals(currUser._id)){ %> 
+  <div class="btns col-1 offset-3">
+   
+    <form method="POST" action="/blogs/<%= blog._id%>?_method=DELETE">
+      <button class="btn btn-dark col-1 offset-3 edit-btn">Delete</button>
+    </form>
+  </div>
+  <% } %>
+
+  <div class="col-6 offset-3">
+    <hr>
+    <% if(currUser){  %>
+    <h4>Leave a comment</h4>
+    <form action="/blogs/<%= blog._id%>/comments" method="POST" class="mb-3 needs-validation" novalidate >
+      <!-- <div class="mb-3 mt-3"> -->
+        
+      
+     <!-- <label for="rating" class="form-label" ></label>
+      <fieldset class="starability-slot">
+        <input type="radio" id="no-rate" class="input-no-rate" name="comment[rating]" value="1" checked aria-label="No rating." />
+        <input type="radio" id="first-rate1" name="comment[rating]" value="1" />
+        <label for="first-rate1" title="Terrible">1 star</label>
+        <input type="radio" id="first-rate2" name="comment[rating]" value="2" />
+        <label for="first-rate2" title="Not good">2 stars</label>
+        <input type="radio" id="first-rate3" name="comment[rating]" value="3" />
+        <label for="first-rate3" title="Average">3 stars</label>
+        <input type="radio" id="first-rate4" name="comment[rating]" value="4" />
+        <label for="first-rate4" title="Very good">4 stars</label>
+        <input type="radio" id="first-rate5" name="comment[rating]" value="5" />
+        <label for="first-rate5" title="Amazing">5 stars</label>
+      </fieldset>
+    </div> -->
+      <div class="mb-3 mt-3">
+        <label for="comment" class="form-label">Comments</label>
+        <textarea
+          name="comment[comment]"
+          id="comment"
+          cols="30"
+          rows="5"
+          class="form-control"
+          required
+        ></textarea>
+        <div class="invalid-feedback">Please add some comments </div>
+      </div>
+      <div class="mb-3 mt-3">
+        <button class="btn btn-outline-dark">Submit</button>
+      </div>
+    </form>
+    <hr/>
+    <% } %>
+   
+
+      <p><b>All Comments</b></p>
+      <div class="row">
+      <% for(comment of blog.comments){ %>
+        <div class="card col-5 ms-3 mb-3">
+ 
+          <div class="card-body">
+            <h6><strong>@<%= comment.author.username %></strong></h6>
+            <p class="card-text"><%= comment.comment%></p>
+          </div>
+          <br/>
+          <form class="mb-3" method="POST" action="/blogs/<%= blog._id %>/comments/<%= comment._id %>?_method=DELETE">
+            <button class="btn btn-sm btn-dark">Delete</button>
+          </form>
+      </div>
+      <% } %>
+      </div>
+     
+    
+   
+
+  </div>
+  
+
+
+</div>

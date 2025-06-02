@@ -1,0 +1,37 @@
+<% layout("layouts/boilerplate") -%>
+
+  
+
+<div class="container-fluid mt-3">
+  <% allBlog.forEach((blog, i) => { %>
+    <a href="/blogs/<%= blog._id %>" class="blog-link text-decoration-none text-dark">
+      <div class="card w-100 blog-card">
+        <div class="row g-0 h-100 d-flex align-items-stretch flex-nowrap">
+          <% if (i % 2 === 0) { %>
+            <!-- Even index: Image Left -->
+            <div class="col-md-4">
+              <img src="<%= blog.image.url %>" alt="blog image" />
+            </div>
+            <div class="col-md-8 d-flex flex-column">
+              <div class="card-body">
+                <h5 class="card-title"><%= blog.title %></h5>
+              </div>
+            </div>
+          <% } else { %>
+            <!-- Odd index: Image Right -->
+            <div class="col-md-8 d-flex flex-column">
+              <div class="card-body">
+                <h5 class="card-title"><%= blog.title %></h5>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <img src="<%= blog.image.url %>" alt="blog image" class="right-img" />
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </a>
+  <% }) %>
+</div>
+
+
